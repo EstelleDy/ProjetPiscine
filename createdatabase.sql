@@ -38,7 +38,7 @@ CREATE TABLE IF not EXISTS utilisateur
     pseudo VARCHAR(255),
     connet INT,
     foreign key(id_db) references donnee_bancaire(id_db),
-    foreign key(id_ad) references adresse(id_ad),
+    foreign key(id_ad) references adresse(id_ad)
 );
 
 CREATE TABLE IF not EXISTS acheteur
@@ -54,7 +54,7 @@ CREATE TABLE IF not EXISTS vendeur
 	id_vendeur int PRIMARY key not NULL,
 	id_stock int,
 	id_user int,
-    foreign key(id_user) references utilisateur(id_user),
+    foreign key(id_user) references utilisateur(id_user)
 );
 
 CREATE TABLE IF not EXISTS item
@@ -70,7 +70,7 @@ CREATE TABLE IF not EXISTS item
 	id_panier INT,
 	foreign key(id_vendeur) references vendeur(id_vendeur),
 	foreign key(id_acheteur) references acheteur(id_acheteur),
-	foreign key(id_panier) references paner(id_panier),
+	foreign key(id_panier) references paner(id_panier)
 );
 
 CREATE TABLE IF not EXISTS panier
@@ -81,7 +81,7 @@ CREATE TABLE IF not EXISTS panier
 	quantite int,
 	prix_tot int,
 	id_user int,
-	foreign key(id_user) references utilisateur(id_user),
+	foreign key(id_user) references utilisateur(id_user)
 );
 
 CREATE TABLE if not EXISTS id_stock
@@ -92,7 +92,7 @@ CREATE TABLE if not EXISTS id_stock
 	id_item int,
 	id_user int,
 	foreign key(id_item) references item(id_item),
-	foreign key(id_user) references utilisateur(id_user),
+	foreign key(id_user) references utilisateur(id_user)
 );
 
 CREATE TABLE IF not EXISTS categorie
