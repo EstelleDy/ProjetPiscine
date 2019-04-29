@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8/>
+    <title> S'inscrire </title>
+      <link rel = "stylesheet" href = "inscription.css"/>
+</head> 
+
+
+<body>
+    <div id=vide>
+    </div>
+    <form>   
+     <h3> MON PROFIL </h3> 
+        
+        <table>    
+     <tr>       
+        <td> Je suis : </td>
+        <td>
+             <input type="radio" name="jesuis" value="acheteur" checked> Acheteur
+             <input type="radio" name="jesuis" value="vendeur"> Vendeur
+         </td>
+    </tr>     
+            
+            
+    
+    <tr>       
+        <td> Sexe : </td>
+        <td> <input type="radio" name="sex" value="man" id="man"checked> Homme 
+             <input type="radio" name="sex" value="woman"> Femme
+         </td>
+    </tr>
+    
+            
+      <tr>
+        <td> Date de naissance: </td>
+        <td> <input type="date" placeholder="Date de naissance" id="birthday" ></td>      
+    </tr>
+    
+
+    <tr>
+        <td>Nom:</td>
+        <td><input type="text" placeholder="Nom" id="name"></td>     
+    </tr>
+         
+            
+            
+     <tr>
+        <td>Prenom:</td>
+        <td><input type="text" placeholder="Prénom" id="surname"></td>     
+    </tr>
+            
+        </table>    
+            
+        
+        
+        
+     <h3> MES COORDONNEES </h3> 
+        
+     <table> 
+        
+         
+     <tr>
+        <td> Telephone: </td>
+        <td> <input type="tel" placeholder="numero de telephone" id="phone"> </td>
+     </tr>
+    
+          
+    <tr>
+        <td>Adresse:</td>
+        <td><input type="text" placeholder=" adresse" id="adress"></td>     
+    </tr>
+         
+            
+            
+    <tr>
+        <td>Code Postal:</td>
+        <td><input type="text" placeholder="Code postal" id="CP"></td>     
+    </tr>
+            
+         
+            
+            
+     <tr>  
+        <td>Ville:</td>
+        <td><input type="text" placeholder="Ville" id="Ville"></td>     
+    </tr>
+         
+
+    <tr>  
+        <td>Pays:</td>
+        <td> <select name="Pays" id="Pays">
+             <option value="pays"> Selectionner votre pays </option>
+             <option value="allemagne">Allemagne</option>
+             <option value="autriche">Autriche</option>
+             <option value="belgique">Belgique</option>
+             <option value="espagne">Espagne</option>
+             <option value="france">France</option>
+             <option value="irlande">Irlande</option>
+             <option value="italie">Italie</option>
+             <option value="luxembourg">Luxembourg</option>
+             <option value="malte">Malte</option>
+             <option value="Pays-bas">Pays-Bas</option>
+             <option value="pologne">Pologne</option>
+             <option value="portugal">Portugal</option>
+             <option value="RU">Royaume-Unis</option>
+             <option value="suisse">Suisse</option>
+             
+             
+             
+        </select> 
+        </td>
+    </tr>
+       
+        
+    </table>    
+               
+       
+    <h3> MON COMPTE </h3> 
+        
+    <table> 
+        
+    <tr>  
+     <td>Pseudo:</td>
+        <td><input type="text" placeholder="Pseudo" id="Pseudo"></td>     
+    </tr>  
+            
+            
+            
+    <tr>  
+     <td>Mail:</td>
+        <td><input type="text" placeholder="Adresse email" id="Mail"></td>     
+    </tr>  
+            
+            
+          
+    <tr>
+    
+     <td>Mot de Passe:</td>
+        <td><input type="password" placeholder=" mot de passe" name="password" id="password" ></td> 
+        
+    </tr>
+        
+        
+    
+  
+     </table>                    
+    
+        <br>
+        <br>
+        
+            
+    <tr> 
+        <td><input type="reset" value="Réinitialiser" onclick="validate()"></td>
+        <td colspan="2" align="center"><input type="submit" value="S'inscrire" onclick="validate()"></td>
+    </tr>   
+            
+            
+       <br>
+       <br>
+
+            
+       
+        
+    </form>
+    
+    <div id= "errordiv"> </div>
+    
+</body>
+</html>

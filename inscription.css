@@ -1,0 +1,28 @@
+body{
+	background-color: #999284;
+	display:flex;
+	justify-content: row;
+}
+#vide{
+	width:500px;
+
+}
+form{
+	width: 500px;
+	background-color: #FFE1DC;
+	padding-left: 100px;
+	padding-top: 50px;
+	padding-bottom: 100px;
+	border: 5px double black;
+}
+h3{
+	color:#999284;
+}
+td{
+	color:#756A65;
+}
+
+
+#admin,#birthday,#name, #surname,#phone,#adress,#CP,#Ville,#Pays,#Pseudo,#Mail,#password{
+	background-color: #E8DBC8;
+}
