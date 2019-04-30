@@ -4,7 +4,7 @@ USE amazonece;
 
 CREATE TABLE IF not EXISTS donnee_bancaire
 (
-	id_db int PRIMARY key not NULL,
+	id_db int PRIMARY key not NULL AUTO_INCREMENT,
 	type VARCHAR(255),
 	numero_carte int,
 	num_affiche VARCHAR(255),
@@ -14,7 +14,7 @@ CREATE TABLE IF not EXISTS donnee_bancaire
 
 CREATE TABLE IF not EXISTS adresse
 (
-	id_ad int PRIMARY key not NULL,
+	id_ad int PRIMARY key not NULL AUTO_INCREMENT,
 	adresse_l1 VARCHAR(255),
 	adresse_l2 VARCHAR(255),
 	ville VARCHAR(255),
@@ -38,7 +38,7 @@ CREATE TABLE IF not EXISTS utilisateur
     pseudo VARCHAR(255),
     connet INT,
     foreign key(id_db) references donnee_bancaire(id_db),
-    foreign key(id_ad) references adresse(id_ad),
+    foreign key(id_ad) references adresse(id_ad)
 );
 
 CREATE TABLE IF not EXISTS acheteur
@@ -51,15 +51,15 @@ CREATE TABLE IF not EXISTS acheteur
 
 CREATE TABLE IF not EXISTS vendeur
 (
-	id_vendeur int PRIMARY key not NULL,
+	id_vendeur int PRIMARY key not NULL AUTO_INCREMENT,
 	id_stock int,
 	id_user int,
-    foreign key(id_user) references utilisateur(id_user),
+    foreign key(id_user) references utilisateur(id_user)
 );
 
 CREATE TABLE IF not EXISTS item
 (
-	id_item int PRIMARY key not NULL,
+	id_item int PRIMARY key not NULL AUTO_INCREMENT,
 	id_vendeur int,
 	id_acheteur int,
 	nom VARCHAR(255),
@@ -70,29 +70,29 @@ CREATE TABLE IF not EXISTS item
 	id_panier INT,
 	foreign key(id_vendeur) references vendeur(id_vendeur),
 	foreign key(id_acheteur) references acheteur(id_acheteur),
-	foreign key(id_panier) references paner(id_panier),
+	foreign key(id_panier) references paner(id_panier)
 );
 
 CREATE TABLE IF not EXISTS panier
 (
-	id_panier INT PRIMARY key not null,
+	id_panier INT PRIMARY key not null AUTO_INCREMENT,
 	nom VARCHAR(255),
 	prenom VARCHAR(255),
 	quantite int,
 	prix_tot int,
 	id_user int,
-	foreign key(id_user) references utilisateur(id_user),
+	foreign key(id_user) references utilisateur(id_user)
 );
 
-CREATE TABLE if not EXISTS id_stock
+CREATE TABLE if not EXISTS stock
 (
-	if_stock int PRIMARY key not null,
+	id_stock int PRIMARY key not null AUTO_INCREMENT,
 	nom VARCHAR(255),
 	prenom VARCHAR(255),
 	id_item int,
 	id_user int,
 	foreign key(id_item) references item(id_item),
-	foreign key(id_user) references utilisateur(id_user),
+	foreign key(id_user) references utilisateur(id_user)
 );
 
 CREATE TABLE IF not EXISTS categorie
@@ -100,3 +100,6 @@ CREATE TABLE IF not EXISTS categorie
 	id_cat int PRIMARY key not null,
 	nom VARCHAR(255)
 );
+
+/*INSERT INTO `utilisateur`(`nom`, `prenom`, `email`, `statut`, `mdp`, `sexe`, `date_de_naissance`, `pseudo`, `connet`) 
+VALUES ("fayol","clement","clemen.fayol@jeece.fr","acheteur","test","man","1998-04-28","clemf","1")
