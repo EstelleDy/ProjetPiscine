@@ -1,0 +1,32 @@
+<?php
+	include  $_SERVER['DOCUMENT_ROOT']."/semaine_piscin/fonction_sql.php";
+
+// fonction à décommenter :
+
+
+	//ajouter_item("pantalons","c","vetement","40","4");
+	// ajouter_item_panier('4'); // id de l'item
+	//supp_item('5'); // id de l'item
+	//connection("mdptest","testeur2@test.fr"); //mdp,mail
+	// ajouter_item_panier(4, 2); // id de l'item , quantité à ajouter
+	//achat_panier(); // achète le panier de l'utilisateur actif
+
+
+
+
+	$STATUS="acheteur";
+	$SX="man";
+	$B="2019-04-04";
+	$N="test22";
+	$SN="test22";
+	$PH="0697854321";
+	$A="rue du test";
+	$CP="75000";
+	$V="Paris";
+	$PA="France";
+	$PS="testeur";
+	$M="testeur44@test.fr";
+	$PW="mdptest";
+
+	// ajout_user($N,$SN,$M,$STATUS,$PW,$SX,$B,$PS,$A,$V,$CP,$PA,$PH);
+?>
