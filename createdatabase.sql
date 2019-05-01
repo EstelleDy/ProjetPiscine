@@ -68,9 +68,8 @@ CREATE TABLE IF not EXISTS item
 	prix_unite int,
 	quantite int,
 	id_panier INT,
-	foreign key(id_vendeur) references vendeur(id_vendeur),
-	foreign key(id_acheteur) references acheteur(id_acheteur),
-	foreign key(id_panier) references paner(id_panier)
+	id_stock INT,
+	foreign key(id_vendeur) references vendeur(id_vendeur)
 );
 
 CREATE TABLE IF not EXISTS panier
