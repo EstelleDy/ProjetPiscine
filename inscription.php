@@ -1,5 +1,12 @@
 <?php
-
+define('DB_SERVER','localhost');
+define('DB_USER','root');
+define('DB_PASS','');
+//identifier le nom de la bdd
+$database="amazonece";
+//connecter l'utilisateur dans BDD
+$db_handle= mysqli_connect(DB_SERVER,DB_USER,DB_PASS);
+$db_found=mysqli_select_db($db_handle,$database);
 $STATUS=isset($_POST["status"])?$_POST["status"]:"";
 $SX=isset($_POST["sex"])?$_POST["sex"]:"";
 $B=isset($_POST["birthday"])?$_POST["birthday"]:"";
@@ -13,7 +20,7 @@ $PA=isset($_POST["pays"])?$_POST["pays"]:"";
 $PS=isset($_POST["pseudo"])?$_POST["pseudo"]:"";
 $M=isset($_POST["mail"])?$_POST["mail"]:"";
 $PW=isset($_POST["password"])?$_POST["password"]:"";
-
+$error="";
 if($STATUS==""){
 	$error .= "Le champ Statut est vide <br/>";
 }
@@ -57,12 +64,15 @@ if($M==""){
 
 
 if($error==""){
-	echo "Bienvenue  $SN  $N. <br/> Nous avons bien noté que vous habitez  $A  à $V ($CP)";
+	header("Location:connexion.html");
 }
 else{
 	echo " Erreur: $error";
 }
 
 
+//Si le bdd existe faites le traitement
+if($db_found){
 
+}
 ?>
