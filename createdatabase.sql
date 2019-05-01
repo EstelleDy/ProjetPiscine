@@ -105,7 +105,6 @@ CREATE TABLE IF NOT EXISTS `item` (
   `categorie` varchar(255) DEFAULT NULL,
   `prix_unite` int(11) DEFAULT NULL,
   `quantite` int(11) DEFAULT NULL,
-  `id_stock` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_item`),
   KEY `id_vendeur` (`id_vendeur`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
