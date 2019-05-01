@@ -155,30 +155,18 @@ function deconnection(){
 }
 
 
-function ajouter_item_stock($nom,$descri,$categorie,$prix,$quantite){
+function ajouter_item($nom,$descri,$categorie,$prix,$quantite){
 
-	//identifier le nom de la bdd
-	//connecter l'utilisateur dans BDD
-	$db_handle= mysqli_connect(DB_SERVER,DB_USER,DB_PASS);
-	$db_found=mysqli_select_db($db_handle,DB_NAME);
-
-	if($db_found){
+	global $database;
 
 
-		//recherche de l'id du vendeur :
-		$id_vendeur = id_connecte();
+	//recherche de l'id du vendeur :
+	$id_vendeur = id_connecte();
 
-		$sql = "SELECT * FROM vendeur WHERE id_user = '$id_vendeur'";
-		$row = mysqli_query($db_handle,$sql);
-		$data = mysqli_fetch_array($row);
-		$id_stock = $data[1];
-
-		//ajout item dans la bdd item
-		$sql_ajout_item = "INSERT INTO `item`(`id_vendeur`, `nom`, `description`, `categorie`, `prix_unite`, `quantite`, `id_stock`) VALUES ('$id_vendeur','$nom','$descri','$categorie','$prix','$quantite','$id_stock')";
-		mysqli_query($db_handle,$sql_ajout_item);
+	//ajout item dans la bdd item
+	$sql_ajout_item = "INSERT INTO `item`(`id_vendeur`, `nom`, `description`, `categorie`, `prix_unite`, `quantite`) VALUES ('$id_vendeur','$nom','$descri','$categorie','$prix','$quantite')";
+	mysqli_query($database->get_instance(),$sql_ajout_item);
 		
-	}
-	mysqli_close($db_handle);
 }
 
 function supp_item($id_item){
@@ -236,7 +224,7 @@ function ajouter_item_panier($id_item, $qty = 1){
 
 		echo $id_user_acheteur;
 
-		//recherche de l'id du panier de l'acheteur
+		//vérification que l'item existe
 		$item = find_item($id_item);
 		if(is_null($item)) return;
 
@@ -263,6 +251,51 @@ function ajouter_item_panier($id_item, $qty = 1){
 		}
 
 		$row = mysqli_multi_query($database->get_instance(),$add_item_to_cart_sql);
+}
+
+function get_panier($id_user){
+	global $database;
+
+
+	$sql = "SELECT u.nom, u.prenom, u.id_panier, p.prix_tot as panier_total FROM `utilisateur` u
+	INNER JOIN panier p on p.id_panier = u.id_panier
+	WHERE u.id_user = $id_user";
+	$row = mysqli_query($database->get_instance(),$sql);
+	$panier = mysqli_fetch_assoc($row);
+
+
+	$sql = "SELECT id_item, qty from user_item_panier where id_user = $id_user and id_panier = ".$panier['id_panier'];
+	$row = mysqli_query($database->get_instance(),$sql);
+	$data = mysqli_fetch_all($row);
+
+	return($data);
+}
+
+function achat_panier(){
+	global $database;
+
+	$id_user_acheteur = id_connecte();
+
+	$sql = "SELECT u.nom, u.prenom, u.id_panier, p.prix_tot as panier_total FROM `utilisateur` u
+	INNER JOIN panier p on p.id_panier = u.id_panier
+	WHERE u.id_user = $id_user_acheteur";
+	$row = mysqli_query($database->get_instance(),$sql);
+	$panier = mysqli_fetch_assoc($row);
+
+	$tab_panier = get_panier($id_user_acheteur);
+
+	for ($i=0; $i < sizeof($tab_panier); $i++) { 
+		$sql = "UPDATE item set quantite = quantite - ".$tab_panier[$i][1]." WHERE id_item= ".$tab_panier[$i][0];
+		mysqli_query($database->get_instance(),$sql);
+	}
+
+
+	$sql = "DELETE FROM user_item_panier WHERE id_user = $id_user_acheteur and id_panier = ".$panier['id_panier'];
+	mysqli_query($database->get_instance(),$sql);
+
+	$sql = "UPDATE panier set prix_tot = '0' WHERE id_panier = ".$panier['id_panier'];
+	mysqli_query($database->get_instance(),$sql);
+	
 }
 
 ?>
