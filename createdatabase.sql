@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 01 mai 2019 à 15:23
+-- Généré le :  mer. 01 mai 2019 à 20:55
 -- Version du serveur :  5.7.24
 -- Version de PHP :  7.2.14
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `adresse` (
   `pays` varchar(255) DEFAULT NULL,
   `telephone` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_ad`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `adresse`
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `donnee_bancaire` (
   `date_exp` date DEFAULT NULL,
   `code_secur` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_db`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `donnee_bancaire`
@@ -107,19 +107,19 @@ CREATE TABLE IF NOT EXISTS `item` (
   `quantite` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_item`),
   KEY `id_vendeur` (`id_vendeur`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `item`
 --
 
-INSERT INTO `item` (`id_item`, `id_vendeur`, `nom`, `description`, `categorie`, `prix_unite`, `quantite`, `id_stock`) VALUES
-(3, 2, 'chaussure', 'c', 'vetement', 40, 4, 1),
-(4, 2, 'chaussure', 'c', 'vetement', 40, 4, 1),
-(5, 2, 'chaussure', 'cest une chaussure', 'vetement', 40, 4, 1),
-(6, 2, 'chaussure', 'cest une chaussure', 'vetement', 40, 4, 1),
-(7, 2, 'pantalon', 'c', 'vetement', 40, 4, 1),
-(8, 2, 'pantalon', 'c', 'vetement', 40, 4, 1);
+INSERT INTO `item` (`id_item`, `id_vendeur`, `nom`, `description`, `categorie`, `prix_unite`, `quantite`) VALUES
+(3, 2, 'chaussure', 'c', 'vetement', 40, 0),
+(4, 2, 'chaussure', 'c', 'vetement', 40, 4),
+(6, 2, 'chaussure', 'cest une chaussure', 'vetement', 40, 3),
+(7, 2, 'pantalon', 'c', 'vetement', 40, 4),
+(8, 2, 'pantalon', 'c', 'vetement', 40, 4),
+(9, 1, 'pantalons', 'c', 'vetement', 40, 4);
 
 -- --------------------------------------------------------
 
@@ -134,14 +134,15 @@ CREATE TABLE IF NOT EXISTS `panier` (
   `prenom` varchar(255) DEFAULT NULL,
   `prix_tot` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_panier`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `panier`
 --
 
 INSERT INTO `panier` (`id_panier`, `nom`, `prenom`, `prix_tot`) VALUES
-(1, 'test9', 'test2', 120);
+(1, 'test9', 'test2', 0),
+(2, 'test22', 'test22', 0);
 
 -- --------------------------------------------------------
 
@@ -165,8 +166,8 @@ CREATE TABLE IF NOT EXISTS `user_item_panier` (
 --
 
 INSERT INTO `user_item_panier` (`id_user`, `id_item`, `id_panier`, `qty`, `prix_unitaire`, `prix_total`) VALUES
-(1, 3, 1, 2, 40, 80),
-(1, 5, 1, 1, 40, 40);
+(1, 6, 1, 1, 40, 40),
+(1, 3, 1, 4, 40, 80);
 
 -- --------------------------------------------------------
 
@@ -192,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   PRIMARY KEY (`id_user`),
   KEY `id_db` (`id_db`),
   KEY `id_ad` (`id_ad`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `utilisateur`
@@ -200,7 +201,9 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 
 INSERT INTO `utilisateur` (`id_user`, `nom`, `prenom`, `email`, `statut`, `mdp`, `id_db`, `id_ad`, `sexe`, `date_de_naissance`, `pseudo`, `connet`, `id_panier`) VALUES
 (1, 'test9', 'test2', 'testeur@test.fr', 'acheteur', 'mdptest', 1, 1, 'man', '2019-04-04', 'testeur', 1, 1),
-(2, 'test', 'test2', 'testeur2@test.fr', 'vendeur', 'mdptest', 2, 2, 'man', '2019-04-04', 'testeur', 0, NULL);
+(2, 'test', 'test2', 'testeur2@test.fr', 'vendeur', 'mdptest', 2, 2, 'man', '2019-04-04', 'testeur', 0, NULL),
+(3, 'test', 'test22', 'testeur22@test.fr', 'vendeur', 'mdptest', 3, 3, 'man', '2019-04-04', 'testeur', 0, NULL),
+(7, 'test22', 'test22', 'testeur44@test.fr', 'acheteur', 'mdptest', 7, 7, 'man', '2019-04-04', 'testeur', 0, 2);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
