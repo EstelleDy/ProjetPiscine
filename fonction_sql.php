@@ -25,14 +25,18 @@ global $database;
 $database = new DB();
 $database->get_instance();
 
-//ajouter un compte
 function creer_adresse($A,$V,$CP,$PA,$PH){
-	//identifier le nom de la bdd
-	//connecter l'utilisateur dans BDD
+	global $database;
 
-	$sql1 = "INSERT INTO `adresse`(`adresse_l1`, `ville`, `code_postal`, `pays`, `telephone`) VALUES ('$A','$V','$CP','$PA','$PH')";
-	mysqli_query($database->get_instance(), $sql1);
+	$sql = "INSERT INTO `adresse`(`adresse_l1`, `ville`, `code_postal`, `pays`, `telephone`) VALUES ('$A','$V','$CP','$PA','$PH')";
+	mysqli_query($database->get_instance(), $sql);
+}
 
+function creer_db($type,$num_carte,$num_affiche,$date_exp,$code_secur){
+	global $database;
+
+	$sql = "INSERT INTO donnee_bancaire(type, numero_carte, num_affiche,date_exp, code_secur) VALUES ('$type','$num_carte','$num_affiche','$date_exp','$code_secur')"; 
+	mysqli_query($database->get_instance(), $sql);
 }
 
 function ajout_user($N,$SN,$M,$STATUS,$PW,$SX,$B,$PS,$A,$V,$CP,$PA,$PH){
@@ -77,6 +81,7 @@ function ajout_user($N,$SN,$M,$STATUS,$PW,$SX,$B,$PS,$A,$V,$CP,$PA,$PH){
 
 		//ajout de l'adresse : 
 		$sql_adress = "INSERT INTO `adresse`(`adresse_l1`, `ville`, `code_postal`, `pays`, `telephone`) VALUES ('$A','$V','$CP','$PA','$PH')";
+		var_dump($sql_adress);
 		mysqli_query($database->get_instance(),$sql_adress);
 
 		//initialisation donnée bancaire :
@@ -87,6 +92,7 @@ function ajout_user($N,$SN,$M,$STATUS,$PW,$SX,$B,$PS,$A,$V,$CP,$PA,$PH){
 		$id = mysqli_query($database->get_instance(), $id_sql);
 		$data = mysqli_fetch_array($id);
 		$id_adress = $data[0];
+		var_dump($id_adress);
 
 		$id_sql = "SELECT * FROM donnee_bancaire ORDER BY `id_db` DESC LIMIT 1";
 		$id = mysqli_query($database->get_instance(), $id_sql);
@@ -94,11 +100,68 @@ function ajout_user($N,$SN,$M,$STATUS,$PW,$SX,$B,$PS,$A,$V,$CP,$PA,$PH){
 		$id_bdonnee = $data[0];
 
 		$sql_add_ad = "UPDATE `utilisateur` set `id_db`='$id_bdonnee',`id_ad`='$id_adress' WHERE `id_user` = '$id_num'";
+		var_dump($sql_add_ad);
 		mysqli_query($database->get_instance(), $sql_add_ad);
 	}
-
 }
 
+function delete_user($id_user){
+	global $database;
+
+	$test_admin = test_id_connecte_admin(id_connecte());
+
+	if($test_admin){
+		$sql = "SELECT statut FROM utilisateur WHERE id_user = '$id_user'";
+		$statut = mysqli_fetch_assoc(mysqli_query($database->get_instance(),$sql));
+		var_dump($statut);
+		
+		if($statut['statut'] === "acheteur"){
+
+		}
+		if($statut['statut'] === 'vendeur'){
+			// tu prend le stock du vendeur
+			$tab_item = get_stock($id_user);
+			var_dump($tab_item);
+
+			// pour chacun de ses items tu les supprime dans les panier des acheteurs et deduit du prix total du panier :
+			for ($i=0; $i < sizeof($tab_item) ; $i++) { 
+				$sql = "SELECT * FROM user_item_panier WHERE id_item =". $tab_item[$i][0];
+				$prix_tot = mysqli_fetch_assoc(mysqli_query($database->get_instance(),$sql));
+				var_dump($prix_tot);
+				if(!is_null($prix_tot)){
+					$id_user_panier = $prix_tot['id_user'];
+					$sql = "UPDATE panier set prix_tot = prix_tot - ".$prix_tot['prix_total'];
+					var_dump($sql);
+					mysqli_query($database->get_instance(),$sql);
+				}
+				$sql = "DELETE FROM user_item_panier WHERE id_item = ". $tab_item[$i][0];
+				var_dump($sql);
+				mysqli_query($database->get_instance(),$sql);
+			}
+			$sql = "DELETE FROM item where id_vendeur = '$id_user'";
+			var_dump($sql);
+			mysqli_query($database->get_instance(),$sql);
+		}
+
+		$sql = "SELECT id_ad,id_db FROM utilisateur WHERE id_user = '$id_user'";
+		$data = mysqli_fetch_assoc(mysqli_query($database->get_instance(),$sql));
+
+		$sql = "DELETE FROM adresse WHERE id_ad = ". $data['id_ad'];
+		mysqli_query($database->get_instance(),$sql);
+
+		$sql = "DELETE FROM donnee_bancaire WHERE id_db = ". $data['id_db'];
+		mysqli_query($database->get_instance(),$sql);
+
+		$sql = "DELETE FROM utilisateur WHERE id_user = '$id_user'";
+		mysqli_query($database->get_instance(),$sql);
+
+	}
+	else{
+		echo "vous netes pas administrateur";
+	}
+
+	die();
+}
 
 function id_connecte(){
 
@@ -112,7 +175,6 @@ function id_connecte(){
 	
 
 	return $id_connect;
-
 }
 
 function connection($mdp,$email){
@@ -141,8 +203,6 @@ function connection($mdp,$email){
 	else {
 		echo "erreure connection";
 	}
-	
-
 }
 
 function deconnection(){
@@ -150,10 +210,8 @@ function deconnection(){
 	global $database;
 
 	$sql = "UPDATE utilisateur set connet = '0' ";
-	mysqli_query($database->get_instance(),$sql);
-	
+	mysqli_query($database->get_instance(),$sql);	
 }
-
 
 function ajouter_item($nom,$descri,$categorie,$prix,$quantite){
 
@@ -165,8 +223,7 @@ function ajouter_item($nom,$descri,$categorie,$prix,$quantite){
 
 	//ajout item dans la bdd item
 	$sql_ajout_item = "INSERT INTO `item`(`id_vendeur`, `nom`, `description`, `categorie`, `prix_unite`, `quantite`) VALUES ('$id_vendeur','$nom','$descri','$categorie','$prix','$quantite')";
-	mysqli_query($database->get_instance(),$sql_ajout_item);
-		
+	mysqli_query($database->get_instance(),$sql_ajout_item);		
 }
 
 function supp_item($id_item){
@@ -182,8 +239,7 @@ function supp_item($id_item){
 
 	for ($i=0; $i < count($data) ; $i++) { 
 		ajouter_item_panier($id_item,0);
-	}
-	
+	}	
 }
 
 function install_database(){
@@ -263,7 +319,6 @@ function get_panier($id_user){
 	$row = mysqli_query($database->get_instance(),$sql);
 	$panier = mysqli_fetch_assoc($row);
 
-
 	$sql = "SELECT id_item, qty from user_item_panier where id_user = $id_user and id_panier = ".$panier['id_panier'];
 	$row = mysqli_query($database->get_instance(),$sql);
 	$data = mysqli_fetch_all($row);
@@ -294,8 +349,70 @@ function achat_panier(){
 	mysqli_query($database->get_instance(),$sql);
 
 	$sql = "UPDATE panier set prix_tot = '0' WHERE id_panier = ".$panier['id_panier'];
-	mysqli_query($database->get_instance(),$sql);
+	mysqli_query($database->get_instance(),$sql);	
+}
+
+function get_stock($id_user){
+	global $database;
+
+	$sql = "SELECT * FROM item WHERE id_vendeur = $id_user";
+	$row = mysqli_fetch_all(mysqli_query($database->get_instance(),$sql));
 	
+	return $row;
+
+}
+
+function get_list_categorie($categorie){
+	global $database;
+
+	$sql = "SELECT * FROM item WHERE categorie = '$categorie'";
+	$row = mysqli_query($database->get_instance(),$sql);
+	$data = mysqli_fetch_all($row);
+
+	var_dump($data);
+
+	return ($data);
+
+}
+
+function define_var_item($id_item,$nom_var){
+
+	global $database;
+
+	//test si la variation se fait bien sur un vetement;
+	$sql = "SELECT categorie FROM item WHERE id_item = '$id_item'";
+	$row = mysqli_query($database->get_instance(),$sql);
+	$data = mysqli_fetch_assoc($row);
+
+	if($data['categorie'] === "vetement"){
+
+
+		//test si cette variation n'existe pas déjà :
+		$sql = "SELECT * FROM item_variation WHERE id_item='$id_item' and nom_var_item='$nom_var'";
+		$row = mysqli_query($database->get_instance(),$sql);
+		$data = mysqli_fetch_assoc($row);
+
+		if(is_null($data)){
+			$sql = "INSERT INTO item_variation (id_item,nom_var_item) VALUES ('$id_item','$nom_var')";
+			mysqli_query($database->get_instance(),$sql);
+		}else{
+			echo "var existe deja";
+		}
+	}
+}
+
+function test_id_connecte_admin($id_user){
+
+	global $database;
+
+	$sql = "SELECT nom,prenom,email FROM utilisateur WHERE id_user = '$id_user'";
+	$row = mysqli_query($database->get_instance(),$sql);
+	$data = mysqli_fetch_assoc($row);
+
+	if ($data['nom']==="Admin" && $data['prenom'] === "Admin" && $data['email'] === "Administrateur@gmail.fr"){
+		return true;
+	}
+	return false;
 }
 
 ?>
