@@ -213,7 +213,7 @@ function deconnection(){
 	mysqli_query($database->get_instance(),$sql);	
 }
 
-function ajouter_item($nom,$descri,$categorie,$prix,$quantite){
+function ajouter_item($nom,$descri,$categorie,$prix,$quantite,$photo){
 
 	global $database;
 
@@ -222,8 +222,17 @@ function ajouter_item($nom,$descri,$categorie,$prix,$quantite){
 	$id_vendeur = id_connecte();
 
 	//ajout item dans la bdd item
-	$sql_ajout_item = "INSERT INTO `item`(`id_vendeur`, `nom`, `description`, `categorie`, `prix_unite`, `quantite`) VALUES ('$id_vendeur','$nom','$descri','$categorie','$prix','$quantite')";
+	$sql_ajout_item = "INSERT INTO `item`(`id_vendeur`, `nom`, `description`, `categorie`, `prix_unite`, `quantite`,photo) VALUES ('$id_vendeur','$nom','$descri','$categorie','$prix','$quantite','$photo')";
 	mysqli_query($database->get_instance(),$sql_ajout_item);		
+}
+
+function get_image($id_item){
+	global $database;
+
+	$sql = "SELECT photo FROM item WHERE id_item = '$id_item' ";
+	$row = mysqli_fetch_assoc(mysqli_query($database->get_instance(),$sql));
+
+	return $row['photo'];
 }
 
 function supp_item($id_item){
@@ -326,6 +335,15 @@ function get_panier($id_user){
 	return($data);
 }
 
+function update_qty_vendu($tab_panier){
+	global $database;
+
+	for ($i=0; $i < sizeof($tab_panier); $i++) { 
+		$sql ="UPDATE item set qty_vendu = qty_vendu + ".$tab_panier[$i][1]." WHERE id_item = ".$tab_panier[$i][0];
+		mysqli_query($database->get_instance(),$sql);
+	}
+}
+
 function achat_panier(){
 	global $database;
 
@@ -344,6 +362,8 @@ function achat_panier(){
 		mysqli_query($database->get_instance(),$sql);
 	}
 
+	update_qty_vendu($tab_panier);
+
 
 	$sql = "DELETE FROM user_item_panier WHERE id_user = $id_user_acheteur and id_panier = ".$panier['id_panier'];
 	mysqli_query($database->get_instance(),$sql);
@@ -359,7 +379,6 @@ function get_stock($id_user){
 	$row = mysqli_fetch_all(mysqli_query($database->get_instance(),$sql));
 	
 	return $row;
-
 }
 
 function get_list_categorie($categorie){
@@ -372,7 +391,6 @@ function get_list_categorie($categorie){
 	var_dump($data);
 
 	return ($data);
-
 }
 
 function define_var_item($id_item,$nom_var){
@@ -413,6 +431,15 @@ function test_id_connecte_admin($id_user){
 		return true;
 	}
 	return false;
+}
+
+function get_flash_vente(){
+	global $database;
+
+	$sql = "SELECT MAX(qty_vendu),id_item,categorie FROM item GROUP BY categorie";
+	$row = mysqli_fetch_all(mysqli_query($database->get_instance(),$sql));
+	
+	return $row;
 }
 
 ?>
