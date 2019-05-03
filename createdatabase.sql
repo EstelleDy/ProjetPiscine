@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `adresse` (
   `pays` varchar(255) DEFAULT NULL,
   `telephone` int(11) UNSIGNED DEFAULT NULL,
   PRIMARY KEY (`id_ad`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `adresse`
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `donnee_bancaire` (
   `date_exp` date DEFAULT NULL,
   `code_secur` int(11) UNSIGNED DEFAULT NULL,
   PRIMARY KEY (`id_db`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `donnee_bancaire`
@@ -95,23 +95,25 @@ CREATE TABLE IF NOT EXISTS `item` (
   `categorie` varchar(255) DEFAULT NULL,
   `prix_unite` int(11) UNSIGNED DEFAULT NULL,
   `quantite` int(11) UNSIGNED DEFAULT NULL,
+  `photo` varchar(255)DEFAULT NULL,
+  `qty_vendu` int(11) UNSIGNED DEFAULT 0,
   PRIMARY KEY (`id_item`),
   KEY `id_vendeur` (`id_vendeur`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `item`
 --
 
-INSERT INTO `item` (`id_item`, `id_vendeur`, `nom`, `description`, `categorie`, `prix_unite`, `quantite`) VALUES
-(1, 2, 'Pantalons', 'c', 'vetement', 40, 4),
-(2, 2, 'Chaussure', 'c', 'vetement', 40, 4),
-(3, 3, 'Doudoune', 'c', 'vetement', 40, 4),
-(4, 3, 'Echarpe', 'c', 'vetement', 40, 4),
-(5, 2, 'Avenger : Infinity war', 'film', 'divertissement', 40, 4),
-(6, 2, 'Club de golf', 'c', 'divertissement', 40, 4),
-(7, 2, 'Le petit prince d\'Antoine de Saint-Exupéry', 'c', 'livre', 40, 4),
-(8, 3, 'Les Trois Mousquetaires d\'Alexandre Dumas', 'livre', 'livre', 30, 5);
+INSERT INTO `item` (`id_item`, `id_vendeur`, `nom`, `description`, `categorie`, `prix_unite`, `quantite`,`photo`,`qty_vendu`) VALUES
+(1, 2, 'Pantalons', 'c', 'vetement', 40, 4,NULL,0),
+(2, 2, 'Chaussure', 'c', 'vetement', 40, 4,NULL,0),
+(3, 3, 'Doudoune', 'c', 'vetement', 40, 4,NULL,0),
+(4, 3, 'Echarpe', 'c', 'vetement', 40, 4,NULL,0),
+(5, 2, 'Avenger : Infinity war', 'film', 'divertissement', 40, 4,NULL,0),
+(6, 2, 'Club de golf', 'c', 'divertissement', 40, 4,NULL,0),
+(7, 2, 'Le petit prince d\'Antoine de Saint-Exupéry', 'c', 'livre', 40, 4,NULL,0),
+(8, 3, 'Les Trois Mousquetaires d\'Alexandre Dumas', 'livre', 'livre', 30, 5,NULL,0);
 
 -- --------------------------------------------------------
 
@@ -148,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `panier` (
   `prenom` varchar(255) DEFAULT NULL,
   `prix_tot` int(11) UNSIGNED DEFAULT NULL,
   PRIMARY KEY (`id_panier`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `panier`
@@ -180,14 +182,14 @@ CREATE TABLE IF NOT EXISTS `user_item_panier` (
 --
 
 INSERT INTO `user_item_panier` (`id_user`, `id_item`, `id_panier`, `qty`, `prix_unitaire`, `prix_total`) VALUES
-(8, 4, 3, 2, 40, 80),
-(8, 1, 3, 1, 40, 40),
+(5, 4, 3, 2, 40, 80),
+(5, 1, 3, 1, 40, 40),
 (4, 3, 2, 2, 40, 80),
-(8, 2, 3, 1, 40, 40),
-(8, 5, 3, 1, 40, 40),
-(8, 6, 3, 2, 40, 80),
-(8, 7, 3, 1, 40, 40),
-(8, 8, 3, 1, 30, 30);
+(5, 2, 3, 1, 40, 40),
+(5, 5, 3, 1, 40, 40),
+(5, 6, 3, 2, 40, 80),
+(5, 7, 3, 1, 40, 40),
+(5, 8, 3, 1, 30, 30);
 
 -- --------------------------------------------------------
 
@@ -213,18 +215,18 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   PRIMARY KEY (`id_user`),
   KEY `id_db` (`id_db`),
   KEY `id_ad` (`id_ad`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `utilisateur`
 --
 
 INSERT INTO `utilisateur` (`id_user`, `nom`, `prenom`, `email`, `statut`, `mdp`, `id_db`, `id_ad`, `sexe`, `date_de_naissance`, `pseudo`, `connet`, `id_panier`) VALUES
-(1, 'Admin', 'Admin', 'Administrateur@gmail.fr', 'administrateur', 'Adm1n1strateur', NULL, NULL, NULL, NULL, 'Administrateur', 1, NULL),
+(1, 'Admin', 'Admin', 'Administrateur@gmail.fr', 'administrateur', 'Adm1n1strateur', NULL, NULL, NULL, NULL, 'Administrateur', 0, NULL),
 (2, 'Fayol', 'Clement', 'clemen.fayol@gmail.fr', 'vendeur', 'mdpclement', 1, 1, 'man', '1990-10-20', 'ClementF', 0, NULL),
 (3, 'Demas', 'Laure', 'Laure.strmfld@gmail.com', 'vendeur', 'mdpLaure', 2, 2, 'woman', '1998-05-11', 'LaureD', 0, NULL),
 (4, 'Drancy', 'Estelle', 'estelle.drancy@gmail.com', 'acheteur', 'mdpEstelle', 3, 3, 'woman', '1998-10-21', 'EstelleD', 0, 2),
-(8, 'Brasse', 'Jeremy', 'Jeremy.brasse@gmail.com', 'acheteur', 'mdpJeremy', 4, 4, 'man', '1997-06-18', 'JeremyB', 0, 3);
+(5, 'Brasse', 'Jeremy', 'Jeremy.brasse@gmail.com', 'acheteur', 'mdpJeremy', 4, 4, 'man', '1997-06-18', 'JeremyB', 1, 3);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
