@@ -4,29 +4,40 @@
 // fonction à décommenter :
 
 
-	//ajouter_item("pantalons","c","vetement","40","4");
+	//ajouter_item("chaussure","c","vetement","40","4");
 	// ajouter_item_panier('4'); // id de l'item
 	//supp_item('5'); // id de l'item
 	//connection("mdptest","testeur2@test.fr"); //mdp,mail
-	// ajouter_item_panier(4, 2); // id de l'item , quantité à ajouter
-	//achat_panier(); // achète le panier de l'utilisateur actif
+	// ajouter_item_panier(8,1); // id de l'item , quantité à ajouter
+	// achat_panier(); // achète le panier de l'utilisateur actif
+	// get_list_categorie('livre');
+	// define_var_item(4,"S");
+	// $test =  test_id_connecte_admin(1);
+	// $data = get_stock(2);
+	// echo $data[0][2];
+	// delete_user(2);
+
+	// get_flash_vente();
 
 
 
-
-	$STATUS="acheteur";
+	$STATUS="vendeur";
 	$SX="man";
-	$B="2019-04-04";
-	$N="test22";
-	$SN="test22";
-	$PH="0697854321";
-	$A="rue du test";
-	$CP="75000";
+	$B="1997-06-18";
+	$N="Albert";
+	$SN="Jean";
+	$PH="0766774484";
+	$A="rue dAlbertville"; 
+	$CP="75012";
 	$V="Paris";
 	$PA="France";
-	$PS="testeur";
-	$M="testeur44@test.fr";
-	$PW="mdptest";
+	$PS="JeanA";
+	$M="Jean.albert@gmail.com";
+	$PW="mdpJean";
 
 	// ajout_user($N,$SN,$M,$STATUS,$PW,$SX,$B,$PS,$A,$V,$CP,$PA,$PH);
+
+	// $photo = get_image(4);
+	// $lien_photo = "/semaine_piscin/images/".$photo;
+	// echo ('<img src="'.$lien_photo.'">');
 ?>
