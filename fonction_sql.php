@@ -442,4 +442,19 @@ function get_flash_vente(){
 	return $row;
 }
 
+function get_list_vendeur(){
+	global $database;
+
+	$sql = "SELECT id_user FROM utilisateur WHERE connet = '1'";
+	$row = mysqli_fetch_assoc(mysqli_query($database->get_instance(),$sql));
+	var_dump($row);
+
+	if (test_id_connecte_admin($row['id_user'])) {
+		$sql = "SELECT nom,prenom,email FROM utilisateur WHERE statut = 'vendeur'";
+		$row = mysqli_fetch_all(mysqli_query($database->get_instance(),$sql));
+
+		var_dump($row);
+	}
+}
+
 ?>
