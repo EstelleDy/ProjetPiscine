@@ -190,7 +190,7 @@ INSERT INTO `user_item_panier` (`id_user`, `id_item`, `id_panier`, `qty`, `prix_
 (5, 2, 3, 1, 40, 40,'Chaussure'),
 (5, 5, 3, 1, 40, 40,'Avenger : Infinity war'),
 (5, 6, 3, 2, 40, 80,'Club de golf'),
-(5, 7, 3, 1, 40, 40,'Le petit prince d\'Antoine de Saint-Exupéry'),
+(5, 7, 3, 1, 40, 40,'Le petit prince d\'Antoine de Saint-Exupery'),
 (5, 8, 3, 1, 30, 30,'Les Trois Mousquetaires d\'Alexandre Dumas ');
 
 -- --------------------------------------------------------
@@ -215,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `connet` int(11) DEFAULT NULL,
   `id_panier` int(10) UNSIGNED DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL, 
- `banniere` varchar(255) DEFAULT NULL,
+
  PRIMARY KEY (`id_user`),
   KEY `id_db` (`id_db`),
   KEY `id_ad` (`id_ad`)
@@ -224,12 +224,12 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 -- Déchargement des données de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`id_user`, `nom`, `prenom`, `email`, `statut`, `mdp`, `id_db`, `id_ad`, `sexe`, `date_de_naissance`, `pseudo`, `connet`, `id_panier`,`photo`,`banniere`) VALUES
-(1, 'Admin', 'Admin', 'Administrateur@gmail.fr', 'administrateur', 'Adm1n1strateur', NULL, NULL, NULL, NULL, 'Administrateur', 0, NULL,NULL,NULL),
-(2, 'Fayol', 'Clement', 'clemen.fayol@gmail.fr', 'vendeur', 'mdpclement', 1, 1, 'man', '1990-10-20', 'ClementF', 0, NULL,NULL,NULL),
-(3, 'Demas', 'Laure', 'Laure.strmfld@gmail.com', 'vendeur', 'mdpLaure', 2, 2, 'woman', '1998-05-11', 'LaureD', 0, NULL,NULL,NULL),
-(4, 'Drancy', 'Estelle', 'estelle.drancy@gmail.com', 'acheteur', 'mdpEstelle', 3, 3, 'woman', '1998-10-21', 'EstelleD', 0, 2,NULL,NULL),
-(5, 'Brasse', 'Jeremy', 'Jeremy.brasse@gmail.com', 'acheteur', 'mdpJeremy', 4, 4, 'man', '1997-06-18', 'JeremyB', 1, 3,NULL,NULL);
+INSERT INTO `utilisateur` (`id_user`, `nom`, `prenom`, `email`, `statut`, `mdp`, `id_db`, `id_ad`, `sexe`, `date_de_naissance`, `pseudo`, `connet`, `id_panier`,`photo`,) VALUES
+(1, 'Admin', 'Admin', 'Administrateur@gmail.fr', 'administrateur', 'Adm1n1strateur', NULL, NULL, NULL, NULL, 'Administrateur', 0, NULL,NULL),
+(2, 'Fayol', 'Clement', 'clemen.fayol@gmail.fr', 'vendeur', 'mdpclement', 1, 1, 'man', '1990-10-20', 'ClementF', 0, NULL,NULL),
+(3, 'Demas', 'Laure', 'Laure.strmfld@gmail.com', 'vendeur', 'mdpLaure', 2, 2, 'woman', '1998-05-11', 'LaureD', 0, NULL,NULL),
+(4, 'Drancy', 'Estelle', 'estelle.drancy@gmail.com', 'acheteur', 'mdpEstelle', 3, 3, 'woman', '1998-10-21', 'EstelleD', 0, 2,NULL),
+(5, 'Brasse', 'Jeremy', 'Jeremy.brasse@gmail.com', 'acheteur', 'mdpJeremy', 4, 4, 'man', '1997-06-18', 'JeremyB', 1, 3,NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
