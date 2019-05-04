@@ -107,14 +107,14 @@ CREATE TABLE IF NOT EXISTS `item` (
 --
 
 INSERT INTO `item` (`id_item`, `id_vendeur`, `nom`, `description`, `categorie`, `prix_unite`, `quantite`,`photo`,`qty_vendu`) VALUES
-(1, 2, 'Pantalons', 'c', 'vetement', 40, 4,NULL,0),
-(2, 2, 'Chaussure', 'c', 'vetement', 40, 4,NULL,0),
-(3, 3, 'Doudoune', 'c', 'vetement', 40, 4,NULL,0),
-(4, 3, 'Echarpe', 'c', 'vetement', 40, 4,NULL,0),
-(5, 2, 'Avenger : Infinity war', 'film', 'divertissement', 40, 4,NULL,0),
-(6, 2, 'Club de golf', 'c', 'divertissement', 40, 4,NULL,0),
-(7, 2, 'Le petit prince d\'Antoine de Saint-Exupéry', 'c', 'livre', 40, 4,NULL,0),
-(8, 3, 'Les Trois Mousquetaires d\'Alexandre Dumas', 'livre', 'livre', 30, 5,NULL,0);
+(1, 2, 'Pantalons', 'c', 'vetement', 40, 4, Pantalons,0),
+(2, 2, 'Chaussure', 'c', 'vetement', 40, 4, Chaussure,0),
+(3, 3, 'Doudoune', 'c', 'vetement', 40, 4, Doudoune,0),
+(4, 3, 'Echarpe', 'c', 'vetement', 40, 4, Echarpe,0),
+(5, 2, 'Avenger : Infinity war', 'film', 'divertissement', 40, 4, Avenger : Infinity war,0),
+(6, 2, 'Club de golf', 'c', 'divertissement', 40, 4, Club de golf,0),
+(7, 2, 'Le petit prince d\'Antoine de Saint-Exupéry', 'c', 'livre', 40, 4, Le petit prince d\'Antoine de Saint-Exupéry,0),
+(8, 3, 'Les Trois Mousquetaires d\'Alexandre Dumas', 'livre', 'livre', 30, 5, Les Trois Mousquetaires d\'Alexandre Dumas,0);
 
 -- --------------------------------------------------------
 
