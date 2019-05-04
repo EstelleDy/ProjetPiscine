@@ -107,14 +107,14 @@ CREATE TABLE IF NOT EXISTS `item` (
 --
 
 INSERT INTO `item` (`id_item`, `id_vendeur`, `nom`, `description`, `categorie`, `prix_unite`, `quantite`,`photo`,`qty_vendu`) VALUES
-(1, 2, 'Pantalons', 'c', 'vetement', 40, 4, Pantalons,0),
-(2, 2, 'Chaussure', 'c', 'vetement', 40, 4, Chaussure,0),
-(3, 3, 'Doudoune', 'c', 'vetement', 40, 4, Doudoune,0),
-(4, 3, 'Echarpe', 'c', 'vetement', 40, 4, Echarpe,0),
-(5, 2, 'Avenger : Infinity war', 'film', 'divertissement', 40, 4, Avenger : Infinity war,0),
-(6, 2, 'Club de golf', 'c', 'divertissement', 40, 4, Club de golf,0),
-(7, 2, 'Le petit prince d\'Antoine de Saint-Exupéry', 'c', 'livre', 40, 4, Le petit prince d\'Antoine de Saint-Exupéry,0),
-(8, 3, 'Les Trois Mousquetaires d\'Alexandre Dumas', 'livre', 'livre', 30, 5, Les Trois Mousquetaires d\'Alexandre Dumas,0);
+(1, 2, 'Pantalons', 'c', 'vetement', 40, 4, vetement1,0),
+(2, 2, 'Chaussure', 'c', 'vetement', 40, 4, vetement6,0),
+(3, 3, 'Doudoune', 'c', 'vetement', 40, 4, vetement8,0),
+(4, 3, 'Echarpe', 'c', 'vetement', 40, 4, vetement3,0),
+(5, 2, 'Vinyle', 'musique', 'divertissement', 40, 4, musique6,0),
+(6, 2, 'Club de golf', 'c', 'divertissement', 40, 4, div2,0),
+(7, 2, 'Le petit prince d\'Antoine de Saint-Exupéry', 'c', 'livre', 40, 4, livre2,0),
+(8, 3, 'Cyrano de Bergerac d\'Edmond Rostand', 'livre', 'livre', 30, 5, livre7,0);
 
 -- --------------------------------------------------------
 
@@ -188,10 +188,10 @@ INSERT INTO `user_item_panier` (`id_user`, `id_item`, `id_panier`, `qty`, `prix_
 (5, 1, 3, 1, 40, 40,'Pantalons'),
 (4, 3, 2, 2, 40, 80,'Doudoune'),
 (5, 2, 3, 1, 40, 40,'Chaussure'),
-(5, 5, 3, 1, 40, 40,'Avenger : Infinity war'),
+(5, 5, 3, 1, 40, 40,'Vinyle'),
 (5, 6, 3, 2, 40, 80,'Club de golf'),
 (5, 7, 3, 1, 40, 40,'Le petit prince d\'Antoine de Saint-Exupery'),
-(5, 8, 3, 1, 30, 30,'Les Trois Mousquetaires d\'Alexandre Dumas ');
+(5, 8, 3, 1, 30, 30,'Cyrano de Bergerac d\'Edmond Rostand ');
 
 -- --------------------------------------------------------
 
