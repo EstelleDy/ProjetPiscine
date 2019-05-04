@@ -32,10 +32,10 @@ function creer_adresse($A,$V,$CP,$PA,$PH){
 	mysqli_query($database->get_instance(), $sql);
 }
 
-function creer_db($type,$num_carte,$num_affiche,$date_exp,$code_secur){
+function creer_db($type,$num_carte,$num_affiche,$date_exp_mois,$date_exp_annee,$code_secur){
 	global $database;
 
-	$sql = "INSERT INTO donnee_bancaire(type, numero_carte, num_affiche,date_exp, code_secur) VALUES ('$type','$num_carte','$num_affiche','$date_exp','$code_secur')"; 
+	$sql = "INSERT INTO donnee_bancaire(type, numero_carte, num_affiche,date_exp_mois,date_exp_annee, code_secur) VALUES ('$type','$num_carte','$num_affiche','$date_exp_mois','$date_exp_annee','$code_secur')"; 
 	mysqli_query($database->get_instance(), $sql);
 }
 
@@ -328,7 +328,7 @@ function get_panier($id_user){
 	$row = mysqli_query($database->get_instance(),$sql);
 	$panier = mysqli_fetch_assoc($row);
 
-	$sql = "SELECT id_item, qty from user_item_panier where id_user = $id_user and id_panier = ".$panier['id_panier'];
+	$sql = "SELECT id_item, qty, nom_item from user_item_panier where id_user = $id_user and id_panier = ".$panier['id_panier'];
 	$row = mysqli_query($database->get_instance(),$sql);
 	$data = mysqli_fetch_all($row);
 
@@ -447,14 +447,55 @@ function get_list_vendeur(){
 
 	$sql = "SELECT id_user FROM utilisateur WHERE connet = '1'";
 	$row = mysqli_fetch_assoc(mysqli_query($database->get_instance(),$sql));
-	var_dump($row);
 
 	if (test_id_connecte_admin($row['id_user'])) {
 		$sql = "SELECT nom,prenom,email FROM utilisateur WHERE statut = 'vendeur'";
 		$row = mysqli_fetch_all(mysqli_query($database->get_instance(),$sql));
 
-		var_dump($row);
+		return $row;
 	}
+
 }
 
+function set_photo($photo){
+	global $database;
+
+	$sql = "SELECT id_user FROM utilisateur WHERE connet = '1'";
+	$row = mysqli_fetch_assoc(mysqli_query($database->get_instance(),$sql));
+
+	$sql = "UPDATE utilisateur set photo = '$photo' WHERE id_user = ".$row['id_user'];
+	mysqli_query($database->get_instance(),$sql);
+
+}
+
+function get_photo(){
+	global $database;
+
+	$sql = "SELECT id_user FROM utilisateur WHERE connet = '1'";
+	$row = mysqli_fetch_assoc(mysqli_query($database->get_instance(),$sql));
+
+	$sql = "SELECT photo FROM utilisateur WHERE id_user = ".$row['id_user'];
+	$data = mysqli_fetch_assoc(mysqli_query($database->get_instance(),$sql));
+
+	return $data['photo'];
+
+}
+
+function get_info_user(){
+	global $database;
+
+	$id_user = id_connecte();
+
+	$sql = $sql = "SELECT `nom`,`prenom`,`email`,`photo`,`pseudo`, adresse.adresse_l1,adresse.ville,adresse.code_postal,adresse.code_postal,adresse.pays,adresse.telephone,donnee_bancaire.type,donnee_bancaire.numero_carte,donnee_bancaire.nom_affiche,donnee_bancaire.date_exp_mois,donnee_bancaire.date_exp_annee,donnee_bancaire.code_secur\n"
+
+    . "FROM `utilisateur` u\n"
+
+    . "INNER JOIN adresse ON u.id_ad = adresse.id_ad\n"
+
+    . "INNER JOIN donnee_bancaire ON u.id_db = donnee_bancaire.id_db\n"
+
+    . "WHERE id_user = '$id_user'";
+
+    $row = mysqli_fetch_assoc(mysqli_query($database->get_instance(),$sql));
+}
 ?>
